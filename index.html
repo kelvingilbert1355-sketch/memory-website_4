@@ -1,0 +1,1174 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memories Forever - CG Central Youth 02</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* --- RESET & BASE STYLES --- */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s ease;
+}
+
+:root {
+    --bg-gradient: linear-gradient(135deg, #06070a 0%, #0f111a 50%, #1a1d2e 100%);
+    --text-color: #e2e8f0;
+    --title-color: #ffffff;
+    --section-title: #ffffff;
+    --footer-text: #64748b;
+    
+    /* Light Mode Variables */
+    --bg-light: linear-gradient(135deg, #fff2f5 0%, #fffcfc 50%, #ffe4e6 100%);
+    --text-light: #475569;
+    --title-light: #ff5376;
+    --section-title-light: #1e293b;
+}
+
+body {
+    background: var(--bg-gradient);
+    color: var(--text-color);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* --- LIGHT MODE CLASS OVERRIDE --- */
+body.light-theme {
+    background: var(--bg-light);
+    color: var(--text-light);
+}
+body.light-theme .hero-content h1 {
+    color: var(--title-light);
+    text-shadow: 0 4px 12px rgba(255,117,140,0.2);
+}
+body.light-theme .section-title h2 { color: var(--section-title-light); }
+body.light-theme .footer h2 { color: var(--section-title-light); }
+body.light-theme .hero-content p { color: #64748b; }
+body.light-theme .scroll-btn {
+    background: linear-gradient(135deg, #ff758c 0%, #ff8fa3 100%);
+    color: white;
+    box-shadow: 0 10px 20px rgba(255,117,140,0.3);
+}
+
+/* --- THEME TOGGLE BUTTON --- */
+.theme-toggle-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+    box-shadow: 0 8px 25px rgba(255, 117, 140, 0.4);
+    cursor: pointer;
+    z-index: 10090;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.theme-toggle-btn:hover { transform: scale(1.15) rotate(360deg); }
+
+/* --- HERO SECTION --- */
+.hero {
+    position: relative;
+    height: 100vh;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 24px;
+    overflow: hidden;
+}
+
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* --- ELEMEN POHON SAKURA (LIGHT MODE OKE) --- */
+.sakura-tree {
+    position: fixed;
+    bottom: -20px;
+    left: -50px;
+    width: 350px;
+    height: auto;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    transform: scaleX(-1) translateY(50px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+body.light-theme .sakura-tree {
+    opacity: 0.85;
+    transform: scaleX(-1) translateY(0);
+}
+
+.hero-content {
+    max-width: 800px;
+    z-index: 2;
+    animation: fadeInUp 1.2s ease-out;
+}
+
+.hero-title-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--title-color);
+    text-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+.hero-content p {
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.9;
+    color: #b9c7d6;
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+}
+
+.scroll-btn {
+    display: inline-block;
+    padding: 12px 32px;
+    background: white;
+    color: #4f46e5;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    animation: bounce 2s infinite;
+}
+.scroll-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+}
+
+/* --- MAIN SECTION STYLES --- */
+.section {
+    position: relative;
+    z-index: 2;
+    padding: 80px 24px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.section-title h2 {
+    font-size: 2.25rem;
+    color: var(--section-title);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(to right, #ff758c, #7c3aed);
+    margin: 15px auto 0 auto;
+    border-radius: 2px;
+}
+
+/* --- PORTRAIT GALLERY GRID --- */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background: rgba(18,19,26,0.12);
+    aspect-ratio: 9 / 16; 
+    width: 100%;
+    cursor: pointer;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    transition: transform 0.6s ease;
+}
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+}
+.gallery-item:hover img { transform: scale(1.05); }
+
+/* --- VIDEO BUTTON --- */
+.video-btn {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg,#ffb86b,#ff7eb3);
+    color: white;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(255,126,179,0.12);
+    z-index: 3;
+    transition: transform 0.2s ease;
+}
+.video-btn:hover { transform: scale(1.06); }
+
+/* Video modal */
+.video-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.85); 
+    z-index: 10050;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.video-modal.active { opacity: 1; pointer-events: auto; }
+.video-modal .video-container {
+    width: 90%;
+    max-width: 900px;
+    background: rgba(6,9,20,0.95);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    position: relative;
+}
+.video-modal video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+}
+.close-video-btn {
+    position: absolute;
+    top: -45px; 
+    right: 0;
+    background: #ffe4e6;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 5;
+    font-weight: 600;
+    color: #ff758c;
+    transition: background 0.2s ease;
+}
+.close-video-btn:hover { background: #ffcbd1; }
+.local-video {
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    border-radius: 8px;
+    display: block; 
+    background: black;
+}
+
+/* --- DIGITAL GUESTBOOK / MEMO WALL --- */
+.memo-wall {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px 0;
+}
+
+.memo-card {
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 5px 10px 20px rgba(0,0,0,0.15);
+    cursor: pointer;
+    position: relative;
+    transform: rotate(var(--r));
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    overflow: hidden;
+}
+.memo-card:hover {
+    transform: scale(1.05) rotate(0deg) translateY(-5px);
+    box-shadow: 10px 20px 30px rgba(0,0,0,0.25);
+    z-index: 5;
+}
+.memo-card::before {
+    content: '✉️';
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+}
+
+.memo-sender {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    border-bottom: 2px dashed rgba(0,0,0,0.1);
+    padding-bottom: 5px;
+    margin-bottom: 12px;
+    margin-top: 10px;
+    display: block;
+}
+
+.memo-text {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #34495e;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.memo-1 { background: #fff9db; } 
+.memo-2 { background: #e8f5e9; } 
+.memo-3 { background: #e3f2fd; } 
+.memo-4 { background: #fce4ec; } 
+.memo-5 { background: #f3e5f5; } 
+.memo-6 { background: #e0f7fa; } 
+.memo-7 { background: #fff3e0; } 
+.memo-8 { background: #f1f8e9; } 
+.memo-9 { background: #fff9c4; } 
+.memo-10 { background: #e8f5e9; } 
+.memo-11 { background: #fff3e0; } 
+
+/* --- MEMO DETAIL POPUP MODAL --- */
+.memo-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 11, 18, 0.8);
+    z-index: 10080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s ease;
+    padding: 20px;
+}
+.memo-modal.active { opacity: 1; pointer-events: auto; }
+.memo-modal-body {
+    width: 100%;
+    max-width: 550px;
+    padding: 40px 30px;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    position: relative;
+    transform: scale(0.85);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+.memo-modal.active .memo-modal-body { transform: scale(1); }
+.close-memo-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(0,0,0,0.08);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: #2c3e50;
+}
+.close-memo-btn:hover { background: rgba(0,0,0,0.15); }
+.memo-modal-sender {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    display: block;
+    border-bottom: 2px dashed rgba(0,0,0,0.1);
+    padding-bottom: 8px;
+}
+.memo-modal-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #34495e;
+    white-space: pre-line;
+}
+
+/* --- LIGHTBOX --- */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 11, 18, 0.95);
+    z-index: 1002;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+.lightbox.active { opacity: 1; pointer-events: auto; }
+.lightbox-content {
+    max-width: 90%;
+    max-height: 80vh;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    transform: scale(0.9);
+    transition: transform 0.4s ease;
+}
+.lightbox.active .lightbox-content { transform: scale(1); }
+
+.lightbox-btn {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s;
+    user-select: none;
+    z-index: 1003;
+}
+.close-btn { top: 20px; right: 20px; }
+.prev-btn { left: 20px; }
+.next-btn { right: 20px; }
+
+/* --- FOOTER --- */
+.footer {
+    background: transparent;
+    color: white;
+    text-align: center;
+    padding: 80px 24px;
+    position: relative;
+    border-top: none;
+}
+.footer h2 { font-size: 2rem; margin-bottom: 12px; letter-spacing: 1px; }
+.footer p { color: var(--footer-text); font-weight: 300; }
+
+/* --- ANIMATIONS --- */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 2.3rem; }
+    .hero-title-container { gap: 10px; }
+    .hero-content p { font-size: 1.1rem; }
+    .section { padding: 60px 20px; }
+    .lightbox-btn { width: 40px; height: 40px; font-size: 1.2rem; }
+    .prev-btn { left: 10px; }
+    .next-btn { right: 10px; }
+    .close-video-btn { top: -40px; }
+    .sakura-tree { width: 180px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Siluet Vektor Pohon Sakura -->
+<svg class="sakura-tree" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 50 100 C 48 85, 45 70, 40 55 C 38 50, 30 45, 25 45 C 23 45, 20 48, 18 45 C 22 40, 32 40, 38 48 C 42 55, 46 75, 51 100 Z" fill="#4a282d"/>
+    <path d="M 43 65 C 46 58, 55 52, 65 54 C 68 55, 75 50, 80 52 C 72 46, 58 48, 50 55 C 46 59, 44 62, 43 65 Z" fill="#4a282d"/>
+    <circle cx="22" cy="42" r="7" fill="#ffb7c5" opacity="0.9"/>
+    <circle cx="28" cy="38" r="9" fill="#ffccd5" opacity="0.85"/>
+    <circle cx="35" cy="46" r="6" fill="#ffa4b6" opacity="0.9"/>
+    <circle cx="62" cy="50" r="8" fill="#ffb7c5" opacity="0.9"/>
+    <circle cx="72" cy="48" r="7" fill="#ffccd5" opacity="0.85"/>
+    <circle cx="55" cy="44" r="10" fill="#ffa4b6" opacity="0.9"/>
+    <circle cx="45" cy="35" r="8" fill="#ffb7c5" opacity="0.8"/>
+</svg>
+
+<!-- Tombol Ganti Tema Dinamis -->
+<button class="theme-toggle-btn" id="theme-toggle-btn" title="Ganti Tema">🌗</button>
+
+<!-- Hero Section -->
+<section class="hero">
+    <canvas id="particle-canvas"></canvas>
+    <div class="hero-content">
+        <div class="hero-title-container">
+            <button class="video-btn" id="open-video-btn" title="Tonton video">🎬</button>
+            <h1>Memories Forever</h1>
+        </div>
+        <p>Terima kasih telah menjadi bagian dari perjalanan, cerita, tawa, dan kenangan indah yang tidak akan pernah terlupakan.</p>
+        <a href="#galeri" class="scroll-btn">Lihat Kenangan ↓</a>
+    </div>
+</section>
+
+<!-- Papan Tempel Pesan Modern (Digital Guestbook) -->
+<section class="section">
+    <div class="section-title">
+        <h2>✍️ Pesan & Kesan Keluarga CG</h2>
+    </div>
+    <div class="memo-wall">
+        <!-- Memo 1 -->
+        <div class="memo-card memo-1" style="--r: -3deg;" onclick="openMemo('reva')">
+            <span class="memo-sender">From: Reva</span>
+            <p class="memo-text">Kak selamat memasuki bab baru, walaupun sedih brutal, tapi aku percaya Tuhan lagi bawa kakak ke tempat yang lebih luas untuk melayani...</p>
+        </div>
+        
+        <!-- Memo 2 -->
+        <div class="memo-card memo-2" style="--r: 2deg;" onclick="openMemo('keren')">
+            <span class="memo-sender">From: Keren</span>
+            <p class="memo-text">A million stars can fill the sky. A thousand fish can inhabit the sea. But you will always be a part of this family...</p>
+        </div>
+        
+        <!-- Memo 3 -->
+        <div class="memo-card memo-5" style="--r: 1deg;" onclick="openMemo('freya')">
+            <span class="memo-sender">From: Freya</span>
+            <p class="memo-text">Halowww kak, aku mau say thank youu ya kak karna selalu ingat aku dan ngajak aku untuk cg dan aog hahaha aku ingat banget dulu kakak selalu invite aku buat join...</p>
+        </div>
+        
+        <!-- Memo 4 -->
+        <div class="memo-card memo-3" style="--r: 3deg;" onclick="openMemo('chris')">
+            <span class="memo-sender">From: Chris</span>
+            <p class="memo-text">Terimakasih ka Anya yang sudah selalu support ak dan selalu juga memuridkan diriku ini yang sangat kepala batu ini dan usil tapi ka Anya tetap mau fight untuk ak bisa maju...</p>
+        </div>
+        
+        <!-- Memo 5 -->
+        <div class="memo-card memo-4" style="--r: -2deg;" onclick="openMemo('kevin')">
+            <span class="memo-sender">From: Kevin</span>
+            <p class="memo-text">Halo Kak Anya! Terima kasih sudah 2 tahun jadi CGL-ku. Kakak sudah mengubah hidup dan pola pikirku, serta memberi keberanian untuk mencoba hal baru.</p>
+        </div>
+        
+        <!-- Memo 6 -->
+        <div class="memo-card memo-5" style="--r: 2deg;" onclick="openMemo('anyamessage')">
+            <span class="memo-sender">From: Ricardo</span>
+            <p class="memo-text">Hai Kak Anya, makasih ya buat semua sharingnya di CG. Aku merasa terberkati dengan apa yang Kak Anya ceritain, apalagi soal be aware of redflag, tema Februari kemarin.</p>
+        </div>
+        <!-- Memo 7 -->
+        <div class="memo-card memo-7" style="--r: -1deg;" onclick="openMemo('syifa')">
+            <span class="memo-sender">From: Syifa</span>
+            <p class="memo-text">Filipi 4:13 — Segala perkara dapat kutanggung di dalam Dia yang memberi kekuatan kepadaku.</p>
+        </div>
+        <!-- Memo 8 -->
+        <div class="memo-card memo-8" style="--r: 1deg;" onclick="openMemo('vincent')">
+            <span class="memo-sender">From: Vincent</span>
+            <p class="memo-text">Filipi 4:13 — Semangat terus, Kak Anya; Tuhan menyertai rencananya untukmu.</p>
+        </div>
+        <!-- Memo 9 -->
+        <div class="memo-card memo-9" style="--r: 2deg;" onclick="openMemo('michael')">
+            <span class="memo-sender">From: Michael</span>
+            <p class="memo-text">Happy graduation Kak Anya! Good luck buat next step-nya ya Kak, sukses terus! God bless you.</p>
+        </div>
+        <!-- Memo 10 -->
+        <div class="memo-card memo-10" style="--r: -2deg;" onclick="openMemo('ria')">
+            <span class="memo-sender">From: Ria</span>
+            <p class="memo-text">Hallo kak Anya, Ria bersyukur dan very happy bisa ketemu Kak Anya. Terima kasih untuk semua bimbingan di CG dan sharing Kotbahnya. Tuhan terus pakai Kak Anya untuk menjangkau jiwa baru di Pro M.</p>
+        </div>
+        <!-- Memo 11 -->
+        <div class="memo-card memo-11" style="--r: 1deg;" onclick="openMemo('meysi')">
+            <span class="memo-sender">From: Meysi</span>
+            <p class="memo-text">Selamat memasuki part baru Alfa, semoga hal baru yang datang membuat Alfa bertumbuh dan tambah kuat di dalam iman.</p>
+        </div>
+        <!-- Memo 7 -->
+        <div class="memo-card memo-6" style="--r: -1deg;" onclick="openMemo('kezia')">
+            <span class="memo-sender">From: Kezia</span>
+            <p class="memo-text">Mazmur 127:4 – Seperti anak-anak panah di tangan pahlawan, demikianlah anak-anak pada masa muda.</p>
+        </div>
+        
+    </div>
+</section>
+
+<!-- Galeri Foto Portrait -->
+<section class="section" id="galeri">
+    <div class="section-title">
+        <h2>📸 Galeri Kenangan</h2>
+    </div>
+    <div class="gallery">
+        <div class="gallery-item"><img src="image/foto (1).jpg" alt="Kenangan foto (1)"></div>
+        <div class="gallery-item"><img src="image/foto (10).jpg" alt="Kenangan foto (10)"></div>
+        <div class="gallery-item"><img src="image/foto (11).jpg" alt="Kenangan foto (11)"></div>
+        <div class="gallery-item"><img src="image/foto (12).jpg" alt="Kenangan foto (12)"></div>
+        <div class="gallery-item"><img src="image/foto (13).jpg" alt="Kenangan foto (13)"></div>
+        <div class="gallery-item"><img src="image/foto (14).jpg" alt="Kenangan foto (14)"></div>
+        <div class="gallery-item"><img src="image/foto (15).jpg" alt="Kenangan foto (15)"></div>
+        <div class="gallery-item"><img src="image/foto (16).jpg" alt="Kenangan foto (16)"></div>
+        <div class="gallery-item"><img src="image/foto (17).jpg" alt="Kenangan foto (17)"></div>
+        <div class="gallery-item"><img src="image/foto (18).jpg" alt="Kenangan foto (18)"></div>
+        <div class="gallery-item"><img src="image/foto (19).jpg" alt="Kenangan foto (19)"></div>
+        <div class="gallery-item"><img src="image/foto (2).jpeg" alt="Kenangan foto (2)"></div>
+        <div class="gallery-item"><img src="image/foto (2).jpg" alt="Kenangan foto (2)"></div>
+        <div class="gallery-item"><img src="image/foto (20).jpg" alt="Kenangan foto (20)"></div>
+        <div class="gallery-item"><img src="image/foto (21).jpg" alt="Kenangan foto (21)"></div>
+        <div class="gallery-item"><img src="image/foto (22).jpg" alt="Kenangan foto (22)"></div>
+        <div class="gallery-item"><img src="image/foto (23).jpg" alt="Kenangan foto (23)"></div>
+        <div class="gallery-item"><img src="image/foto (24).jpg" alt="Kenangan foto (24)"></div>
+        <div class="gallery-item"><img src="image/foto (25).jpg" alt="Kenangan foto (25)"></div>
+        <div class="gallery-item"><img src="image/foto (26).jpg" alt="Kenangan foto (26)"></div>
+        <div class="gallery-item"><img src="image/foto (27).jpg" alt="Kenangan foto (27)"></div>
+        <div class="gallery-item"><img src="image/foto (28).jpg" alt="Kenangan foto (28)"></div>
+        <div class="gallery-item"><img src="image/foto (29).jpg" alt="Kenangan foto (29)"></div>
+        <div class="gallery-item"><img src="image/foto (3).jpeg" alt="Kenangan foto (3)"></div>
+        <div class="gallery-item"><img src="image/foto (3).jpg" alt="Kenangan foto (3)"></div>
+        <div class="gallery-item"><img src="image/foto (30).jpg" alt="Kenangan foto (30)"></div>
+        <div class="gallery-item"><img src="image/foto (31).jpg" alt="Kenangan foto (31)"></div>
+        <div class="gallery-item"><img src="image/foto (32).jpg" alt="Kenangan foto (32)"></div>
+        <div class="gallery-item"><img src="image/foto (33).jpg" alt="Kenangan foto (33)"></div>
+        <div class="gallery-item"><img src="image/foto (34).jpg" alt="Kenangan foto (34)"></div>
+        <div class="gallery-item"><img src="image/foto (35).jpg" alt="Kenangan foto (35)"></div>
+        <div class="gallery-item"><img src="image/foto (36).jpg" alt="Kenangan foto (36)"></div>
+        <div class="gallery-item"><img src="image/foto (37).jpg" alt="Kenangan foto (37)"></div>
+        <div class="gallery-item"><img src="image/foto (38).jpg" alt="Kenangan foto (38)"></div>
+        <div class="gallery-item"><img src="image/foto (39).jpg" alt="Kenangan foto (39)"></div>
+        <div class="gallery-item"><img src="image/foto (4).jpeg" alt="Kenangan foto (4)"></div>
+        <div class="gallery-item"><img src="image/foto (4).jpg" alt="Kenangan foto (4)"></div>
+        <div class="gallery-item"><img src="image/foto (40).jpg" alt="Kenangan foto (40)"></div>
+        <div class="gallery-item"><img src="image/foto (41).jpg" alt="Kenangan foto (41)"></div>
+        <div class="gallery-item"><img src="image/foto (42).jpg" alt="Kenangan foto (42)"></div>
+        <div class="gallery-item"><img src="image/foto (43).jpg" alt="Kenangan foto (43)"></div>
+        <div class="gallery-item"><img src="image/foto (44).jpg" alt="Kenangan foto (44)"></div>
+        <div class="gallery-item"><img src="image/foto (45).jpg" alt="Kenangan foto (45)"></div>
+        <div class="gallery-item"><img src="image/foto (46).jpg" alt="Kenangan foto (46)"></div>
+        <div class="gallery-item"><img src="image/foto (47).jpg" alt="Kenangan foto (47)"></div>
+        <div class="gallery-item"><img src="image/foto (48).jpg" alt="Kenangan foto (48)"></div>
+        <div class="gallery-item"><img src="image/foto (49).jpg" alt="Kenangan foto (49)"></div>
+        <div class="gallery-item"><img src="image/foto (5).jpg" alt="Kenangan foto (5)"></div>
+        <div class="gallery-item"><img src="image/foto (50).jpg" alt="Kenangan foto (50)"></div>
+        <div class="gallery-item"><img src="image/foto (51).jpg" alt="Kenangan foto (51)"></div>
+        <div class="gallery-item"><img src="image/foto (52).jpg" alt="Kenangan foto (52)"></div>
+        <div class="gallery-item"><img src="image/foto (53).jpg" alt="Kenangan foto (53)"></div>
+        <div class="gallery-item"><img src="image/foto (54).jpg" alt="Kenangan foto (54)"></div>
+        <div class="gallery-item"><img src="image/foto (55).jpg" alt="Kenangan foto (55)"></div>
+        <div class="gallery-item"><img src="image/foto (56).jpg" alt="Kenangan foto (56)"></div>
+        <div class="gallery-item"><img src="image/foto (57).jpg" alt="Kenangan foto (57)"></div>
+        <div class="gallery-item"><img src="image/foto (58).jpg" alt="Kenangan foto (58)"></div>
+        <div class="gallery-item"><img src="image/foto (59).jpg" alt="Kenangan foto (59)"></div>
+        <div class="gallery-item"><img src="image/foto (6).jpg" alt="Kenangan foto (6)"></div>
+        <div class="gallery-item"><img src="image/foto (60).jpg" alt="Kenangan foto (60)"></div>
+        <div class="gallery-item"><img src="image/foto (61).jpg" alt="Kenangan foto (61)"></div>
+        <div class="gallery-item"><img src="image/foto (62).jpg" alt="Kenangan foto (62)"></div>
+        <div class="gallery-item"><img src="image/foto (63).jpg" alt="Kenangan foto (63)"></div>
+        <div class="gallery-item"><img src="image/foto (64).jpg" alt="Kenangan foto (64)"></div>
+        <div class="gallery-item"><img src="image/foto (65).jpg" alt="Kenangan foto (65)"></div>
+        <div class="gallery-item"><img src="image/foto (66).jpg" alt="Kenangan foto (66)"></div>
+        <div class="gallery-item"><img src="image/foto (67).jpg" alt="Kenangan foto (67)"></div>
+        <div class="gallery-item"><img src="image/foto (68).jpg" alt="Kenangan foto (68)"></div>
+        <div class="gallery-item"><img src="image/foto (69).jpg" alt="Kenangan foto (69)"></div>
+        <div class="gallery-item"><img src="image/foto (7).jpg" alt="Kenangan foto (7)"></div>
+        <div class="gallery-item"><img src="image/foto (70).jpg" alt="Kenangan foto (70)"></div>
+        <div class="gallery-item"><img src="image/foto (71).jpg" alt="Kenangan foto (71)"></div>
+        <div class="gallery-item"><img src="image/foto (72).jpg" alt="Kenangan foto (72)"></div>
+        <div class="gallery-item"><img src="image/foto (73).jpg" alt="Kenangan foto (73)"></div>
+        <div class="gallery-item"><img src="image/foto (74).jpg" alt="Kenangan foto (74)"></div>
+        <div class="gallery-item"><img src="image/foto (75).jpg" alt="Kenangan foto (75)"></div>
+        <div class="gallery-item"><img src="image/foto (76).jpg" alt="Kenangan foto (76)"></div>
+        <div class="gallery-item"><img src="image/foto (77).jpg" alt="Kenangan foto (77)"></div>
+        <div class="gallery-item"><img src="image/foto (78).jpg" alt="Kenangan foto (78)"></div>
+        <div class="gallery-item"><img src="image/foto (79).jpg" alt="Kenangan foto (79)"></div>
+        <div class="gallery-item"><img src="image/foto (8).jpg" alt="Kenangan foto (8)"></div>
+        <div class="gallery-item"><img src="image/foto (80).jpg" alt="Kenangan foto (80)"></div>
+        <div class="gallery-item"><img src="image/foto (81).jpg" alt="Kenangan foto (81)"></div>
+        <div class="gallery-item"><img src="image/foto (82).jpg" alt="Kenangan foto (82)"></div>
+        <div class="gallery-item"><img src="image/foto (83).jpg" alt="Kenangan foto (83)"></div>
+        <div class="gallery-item"><img src="image/foto (84).jpg" alt="Kenangan foto (84)"></div>
+        <div class="gallery-item"><img src="image/foto (85).jpg" alt="Kenangan foto (85)"></div>
+        <div class="gallery-item"><img src="image/foto (86).jpg" alt="Kenangan foto (86)"></div>
+        <div class="gallery-item"><img src="image/foto (87).jpg" alt="Kenangan foto (87)"></div>
+        <div class="gallery-item"><img src="image/foto (88).jpg" alt="Kenangan foto (88)"></div>
+        <div class="gallery-item"><img src="image/foto (89).jpg" alt="Kenangan foto (89)"></div>
+        <div class="gallery-item"><img src="image/foto (9).jpg" alt="Kenangan foto (9)"></div>
+        <div class="gallery-item"><img src="image/foto (90).jpeg" alt="Kenangan foto (90)"></div>
+    </div>
+</section>
+
+<!-- MODAL POPUP UNTUK BACA MEMO DETAIL -->
+<div class="memo-modal" id="memo-modal">
+    <div class="memo-modal-body" id="memo-modal-body">
+        <button class="close-memo-btn" id="close-memo-btn">&times;</button>
+        <span class="memo-modal-sender" id="memo-modal-sender">From: Nama</span>
+        <p class="memo-modal-text" id="memo-modal-text">Isi lengkap pesan...</p>
+    </div>
+</div>
+
+<!-- VIDEO MODAL -->
+<div class="video-modal" id="video-modal">
+    <div class="video-container">
+        <button class="close-video-btn" id="close-video-btn">Tutup</button>
+        <div class="video-embed">
+            <video id="local-video" class="local-video" controls playsinline></video>
+        </div>
+    </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-btn close-btn" id="close-btn">&times;</button>
+    <button class="lightbox-btn prev-btn" id="prev-btn">&#10094;</button>
+    <img src="" class="lightbox-content" id="lightbox-img" alt="Enlarged view">
+    <button class="lightbox-btn next-btn" id="next-btn">&#10095;</button>
+</div>
+
+<footer class="footer">
+    <h2>💖 CG Central Youth 02 💖</h2>
+    <p>Once a family, always a family.</p>
+</footer>
+
+<script>
+// 1. ENGINE LANGSUNG KOSMOS & SAKURA (ALIEN JALAN BEBAS KE SEGALA ARAH)
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+
+let staticStars = [];
+let meteors = [];
+let planets = [];
+let alienUFO = null;
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// Kelas 1: Bintang Berkilau Statis / Kelopak Sakura
+class StaticStar {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 1.5 + 0.3;
+        this.alpha = Math.random();
+        this.speed = Math.random() * 0.01 + 0.003;
+    }
+    update() {
+        this.alpha += this.speed;
+        if (this.alpha > 1 || this.alpha < 0) this.speed = -this.speed;
+    }
+    draw() {
+        let isLight = document.body.classList.contains('light-theme');
+        ctx.fillStyle = isLight ? `rgba(255, 117, 140, ${Math.abs(this.alpha) * 0.4})` : `rgba(255, 255, 255, ${Math.abs(this.alpha)})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, isLight ? this.size * 2.5 : this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+// Kelas 2: Batuan Meteorit Lewat Cepat
+class MovingMeteor {
+    constructor() { this.reset(); }
+    reset() {
+        this.x = Math.random() * canvas.width * 0.8;
+        this.y = -50;
+        this.size = Math.random() * 1.6 + 0.8;
+        this.length = Math.random() * 100 + 70;
+        this.speedX = Math.random() * 2 + 2.5;
+        this.speedY = Math.random() * 2.5 + 3.5;
+        this.opacity = Math.random() * 0.5 + 0.35;
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.y > canvas.height || this.x > canvas.width) this.reset();
+    }
+    draw() {
+        if (document.body.classList.contains('light-theme')) return;
+        ctx.save();
+        let grad = ctx.createLinearGradient(this.x, this.y, this.x - this.length, this.y - this.length);
+        grad.addColorStop(0, `rgba(255, 255, 255, ${this.opacity})`);
+        grad.addColorStop(0.2, `rgba(244, 63, 94, ${this.opacity * 0.55})`);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = this.size;
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x - this.length, this.y - this.length);
+        ctx.stroke();
+        ctx.restore();
+    }
+}
+
+// Kelas 3: ALIEN UFO LUCU BERGERAK BEBAS (KEMANA-MANA DAN MEMANTUL)
+class FreeMovingAlien {
+    constructor() {
+        this.baseX = canvas.width * 0.25 + Math.random() * canvas.width * 0.5;
+        this.baseY = canvas.height * 0.2 + Math.random() * canvas.height * 0.3;
+        this.x = this.baseX;
+        this.y = this.baseY;
+        this.vx = (Math.random() - 0.5) * 1.2;
+        this.vy = (Math.random() - 0.5) * 1.2;
+        this.ax = 0;
+        this.ay = 0;
+        this.maxSpeed = 1.6;
+        this.changeTimer = 0;
+        this.bobPhase = Math.random() * Math.PI * 2;
+    }
+    update() {
+        this.changeTimer++;
+        if (this.changeTimer > 65) {
+            this.ax = (Math.random() - 0.5) * 0.14;
+            this.ay = (Math.random() - 0.5) * 0.14;
+            this.changeTimer = 0;
+        }
+
+        this.vx += this.ax;
+        this.vy += this.ay;
+
+        let speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+        if (speed > this.maxSpeed) {
+            this.vx = (this.vx / speed) * this.maxSpeed;
+            this.vy = (this.vy / speed) * this.maxSpeed;
+        }
+        if (speed < 0.22) {
+            this.vx += (Math.random() - 0.5) * 0.06;
+            this.vy += (Math.random() - 0.5) * 0.06;
+        }
+
+        this.baseX += this.vx;
+        this.baseY += this.vy;
+        this.bobPhase += 0.02;
+        this.x = this.baseX;
+        this.y = this.baseY + Math.sin(this.bobPhase) * 8;
+
+        if (this.baseX < 60) { this.baseX = 60; this.vx = Math.abs(this.vx) + Math.random() * 0.4; }
+        if (this.baseX > canvas.width - 60) { this.baseX = canvas.width - 60; this.vx = -Math.abs(this.vx) - Math.random() * 0.4; }
+        if (this.baseY < 60) { this.baseY = 60; this.vy = Math.abs(this.vy) + Math.random() * 0.4; }
+        if (this.baseY > canvas.height - 120) { this.baseY = canvas.height - 120; this.vy = -Math.abs(this.vy) - Math.random() * 0.4; }
+    }
+    draw() {
+        if (document.body.classList.contains('light-theme')) return;
+        ctx.save();
+
+        let size = 52;
+        ctx.font = `${size}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
+        ctx.shadowBlur = 10;
+        ctx.fillText('🛸', this.x, this.y + 4);
+
+        ctx.restore();
+    }
+}
+
+// Kelas 4: Planet Kosmos
+class Planet {
+    constructor(x, y, radius, colors, glow, sf) {
+        this.bx = x; this.by = y; this.x = x; this.y = y;
+        this.radius = radius; this.colors = colors; this.glow = glow;
+        this.ax = Math.random() * 5; this.ay = Math.random() * 5;
+        this.sx = 0.0005 * sf; this.sy = 0.0007 * sf;
+    }
+    update() {
+        this.ax += this.sx; this.ay += this.sy;
+        this.x = this.bx + Math.sin(this.ax) * 45;
+        this.y = this.by + Math.cos(this.ay) * 25;
+    }
+    draw() {
+        if (document.body.classList.contains('light-theme')) return;
+        const grad = ctx.createRadialGradient(this.x - this.radius*0.2, this.y - this.radius*0.2, this.radius*0.1, this.x, this.y, this.radius);
+        grad.addColorStop(0, this.colors[0]); grad.addColorStop(0.5, this.colors[1]); grad.addColorStop(1, this.colors[2]);
+        ctx.save();
+        ctx.shadowColor = this.colors[2]; ctx.shadowBlur = this.glow;
+        ctx.fillStyle = grad;
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+    }
+}
+
+function drawGalaxyNebula() {
+    if (document.body.classList.contains('light-theme')) return;
+    ctx.save();
+    let grad = ctx.createRadialGradient(canvas.width*0.5, canvas.height*0.5, 10, canvas.width*0.5, canvas.height*0.5, canvas.width*0.6);
+    grad.addColorStop(0, 'rgba(49, 46, 129, 0.12)'); 
+    grad.addColorStop(0.5, 'rgba(124, 58, 237, 0.04)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.restore();
+}
+
+function initParticles() {
+    staticStars = []; meteors = [];
+    let starCount = window.innerWidth < 768 ? 80 : 200;
+    for (let i = 0; i < starCount; i++) staticStars.push(new StaticStar());
+    for (let i = 0; i < 4; i++) meteors.push(new MovingMeteor());
+    
+    planets = [
+        new Planet(canvas.width * 0.15, canvas.height * 0.25, 45, ['#c7d2fe','#60a5fa','#1e3a8a'], 25, 1),
+        new Planet(canvas.width * 0.85, canvas.height * 0.35, 60, ['#fbcfe8','#ec4899','#4c1d95'], 30, 0.7)
+    ];
+    alienUFO = new FreeMovingAlien(); // Aktifkan sistem jelajah acak
+}
+
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawGalaxyNebula();
+    planets.forEach(p => { p.update(); p.draw(); });
+    staticStars.forEach(s => { s.update(); s.draw(); });
+    meteors.forEach(m => { m.update(); m.draw(); });
+    if (alienUFO) { alienUFO.update(); alienUFO.draw(); }
+    requestAnimationFrame(animateParticles);
+}
+initParticles(); animateParticles();
+
+window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+
+// 2. FUNGSI GANTI TEMA
+const themeToggleBtn = document.getElementById('theme-toggle-btn');
+themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('light-theme');
+    if (document.body.classList.contains('light-theme')) {
+        themeToggleBtn.innerText = '☀️';
+        themeToggleBtn.style.background = 'linear-gradient(135deg, #ffb86b 0%, #ff758c 100%)';
+    } else {
+        themeToggleBtn.innerText = '🌙';
+        themeToggleBtn.style.background = 'linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%)';
+    }
+});
+
+// 3. INTERAKTIF MEMO WALL LOGIKA
+const memoModal = document.getElementById('memo-modal');
+const memoModalBody = document.getElementById('memo-modal-body');
+const memoModalSender = document.getElementById('memo-modal-sender');
+const memoModalText = document.getElementById('memo-modal-text');
+const closeMemoBtn = document.getElementById('close-memo-btn');
+
+const memoData = {
+    reva: {
+        sender: 'Reva',
+        colorClass: 'memo-1',
+        text: `Kak selamat memasuki bab baru, walaupun sedih brutal, tapi aku percaya Tuhan lagi bawa kakak ke tempat yang lebih luas untuk melayani.
+
+Ingat2 kita terus ya kak, terutama aku. Terima kasih untuk 4 bulannya yg sangat berkesan, yg gak bakal aku lupain, punya CGL SECANTIK SEIMUT SEBAIK POKOKNYA THE BEST IN THE WORLD.
+
+Semenjak tau kaka mw naik ke pro M, aku jd mikir coba ya kita ketemu dari dulu, tapi aku lupa jarak umur kita, kalo joink dari kemarin pasti masuknya CG teens wkwkwk (jgn marah kak cm bercanda), bersyukur bgt Tuhan pertemukan kita, dan aku percaya gaada yg kebetulan kita bisa ketemu, lewat kaka aku belajar banyak, yg gak ush disebut di sini, kalo penasaran plis PC aku hahaha.
+
+Sm 1 terakhir, kak walaupun udh pisah CG aku berharap kakak tetap bakal jd mentorku, tetap kirimin SATE, dll.
+INTINYA AKU SAYANG BANGET SM KAKAK, jujur gk nyangka sih seorang aku bisa sayang segininya sm orang lain, terutama yg baru kenal 4 bulan, emg pesona CGL agak laen.
+
+Ayat : 1 Samuel 16:7
+- Bukan yang dilihat manusia yang dilihat Allah; manusia melihat apa yang di depan mata, tetapi TUHAN melihat hati.`,
+    },
+    keren: {
+        sender: 'Keren',
+        colorClass: 'memo-2',
+        text: `A million stars can fill the sky.
+A thousand fish can inhabit the sea.
+But you will always be a part of this family.
+No matter where you may be.
+
+Thank you kak untuk semua support, bimbingan, dan doa. Dimanapun kaka berada, teruslah menjadi terang, seperti kaka selalu menjadi terang bagi kami anak "CY02". All the best to your future endeavours kak! God bless you in every path you take. Seeee youu when I see youu kak 🫶
+
+Ayat : Isaiah 41:10
+So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand.`,
+    },
+    anyamessage: {
+        sender: 'Ricardo',
+        colorClass: 'memo-5',
+        text: `Hai Kak Anya,
+
+Makasih ya buat semua sharingnya di CG, aku merasa terberkati dengan apa yang Kak Anya ceritain saat di CG, apalagi soal be aware of redflag, tema Februari kemarin. Disitu pandanganku berubah tentang hubungan, aku bisa tau apa apa aja yang perlu di ubah, dari diri kita mungkin atau org lain juga.
+
+Makasih buat 5 bulan nya selama ini, pokoknya aku merasa happy lah. Semoga di CG yg baru nanti Tuhan pakai lebih ya, makin bertumbuh, makin menjadi berkat lagi dan menjadi terang bagi semua orang dimanapun itu mau itu di lingkungan CG, di gereja, di perkuliahan, di sirkel pertemanan, atau di pekerjaan maybe, apapun itu Tuhan pasti pakai Kak Anya lebih dahsyat lagi.
+
+Makasih buat semua waktunya, tak henti hentinya ku ucapkan makasih buat semua waktunya selama ini.
+
+ROMA 12:11`,
+    },
+    kezia: {
+        sender: 'Kezia',
+        colorClass: 'memo-6',
+        text: `Mazmur 127:4 (TB)
+Seperti anak-anak panah di tangan pahlawan, demikianlah anak-anak pada masa muda.
+
+Still the best verse for me, and it reminds me so much of you, Kak. Semoga di masa mudamu, kakak selalu bisa jadi berkat buat keluarga, teman dan banyak orang. Terima kasih udah selalu dengar keluh kesahku dan ngasih nasihat yang luar biasa bijak kak. Meskipun waktunya cukup singkat, rasanya kayak udah kenal dirimu bertahun-tahun.
+
+Jaga kesehatan selalu ya kak, supaya kita bisa kumpul bareng-bareng lagi sampai family nanti! Sukses selalu menjadi ibu guru paud yang super duper ceria~~
+
+Love and peace`,
+    },
+    
+    syifa: {
+        sender: 'Syifa',
+        colorClass: 'memo-7',
+        text: `Filipi 4:13
+"Segala perkara dapat kutanggung di dalam Dia yang memberi kekuatan kepadaku"
+
+Ayat ini bisa menjadi sumber kekuatan saat Ka Anya merasa lelah, stres, atau menghadapi rintangan di perjalanan kehidupan Ka Anya.
+
+Terlepas dari itu semua i wanna say thank you for everything Ka Anyaa, karena Ka Anya udah jadi kaka yang sangat amat baik buat aku, udah mau dengarin semua cerita aku. Happy banget bisa ngeliat Ka Anya di titik ini padahal kemaren masih main monopoli bareng, petak umpet, asinan, fashionshow, dan makanan sederhana yang Ka Anya suka sosis yang digoreng + nasi hihihi. Semangat terus ya Ka Anya, terus menjadi lilin buat banyak orang, and happy graduation Ka Zefanya Alfa Sesilia Budiyanto❥
+
+Love and peace`,
+    },
+
+    vincent: {
+        sender: 'Vincent',
+        colorClass: 'memo-8',
+        text: `Dear Kak Anya :
+semangat truss kak selalu berapi" di dalam pelayanan nya, dalam Gereja. Bertumbuh trus dalam pelayanan komunitasnya, semangat lgii kak di ladang visi Tuhan yang baru dan selalu terapkan visi misi Tuhan. Dan aku ga bakal lupakan yang kaka ajarkan selalu di cg ga akan lupakan kaka yang selalu ksih pelajaran kasih masukan yang baik diri aku jg kak, dan jngnn lupakann akuu yahh kak mungkin ini agak sedih aku jg, see uu kak selalu ingat aku kak anya say thanks you kak semangat truss jujur aku sedih kaka sudah ga di youth lagi sekian terimakasih God bless uu
+
+Yeremia 29:11 (TB)
+Sebab Aku ini mengetahui rancangan-rancangan apa yang ada pada-Ku mengenai kamu, demikianlah firman TUHAN, yaitu rancangan damai sejahtera dan bukan rancangan kecelakaan, untuk memberikan kepadamu hari depan yang penuh harapan.
+
+pantun by vincent :
+Pergi berlayar ke pulau seberang,Singgah sebentar membeli tali.Jangan sedih berpisah sekarang,Pasti kita kan berjumpa lagi.
+`,
+    },
+    michael: {
+        sender: 'Michael',
+        colorClass: 'memo-9',
+        text: `Happy graduation Kak Anya! 🤗 Walaupun aku terhitung baru di CG ini dan belom lama kenal, tapi asli seneng dan blessed banget sempet ngerasain satu CG bareng Kak Anya. Good luck buat next step-nya ya Kak, sukses terus! God bless you
+
+Yesaya 41:10 (TB)
+"janganlah takut, sebab Aku menyertai engkau, janganlah bimbang, sebab Aku ini Allahmu; Aku akan meneguhkan, bahkan akan menolong engkau; Aku akan memegang engkau dengan tangan kanan-Ku yang membawa kemenangan."
+`,
+    },
+    ria: {
+        sender: 'Ria',
+        colorClass: 'memo-10',
+        text: `Hallo kak Anya,
+
+Ria bersyukur sekaligus very happy bisa bertemu dengan kak Anya. Pertama kali ketemu kak Anya kita langsung akrab, padahal dulu Ria introvert full. Ketemu kak Anya jadinya Ria gak malu buat jadi pribadinya Ria.
+
+Makasi banyak kak atas arahan bahkan bimbingan kakak selama di CG dan Ria sangat terberkati atas sharing bahkan kotbahnya kakak. Ria berdoa buat kak Anya semakin dipakai Tuhan lebih lagi dalam menjangkau jiwa baru di Pro M.
+
+Mazmur 24:4 (TB)
+Sekali pun aku berjalan dalam lembah kekelaman, aku tidak takut bahaya sebab engkau besertaku, gadaMu dan tongkatMu itu yang menghibur aku.
+`,
+    },
+    meysi: {
+        sender: 'Meysi',
+        colorClass: 'memo-11',
+        text: `Selamat memasuki part baru Alfa, semoga hal baru yang akan datang makin membuat alfa bertumbuh dan tambah kuat di dalam iman.
+
+Yakobus 1:4 (TB)
+"Dan biarkanlah ketekunan itu memperoleh buah yang matang, supaya kamu menjadi sempurna dan utuh dan tak kekurangan suatu apa pun."
+`,
+    },
+
+    freya: {
+        sender: 'Freya',
+        colorClass: 'memo-5',
+        text: `Halowww kak, aku mau say thank youu ya kak karna selalu ingat aku dan ngajak aku untuk cg dan aog hahaha aku ingat banget dulu kakak selalu invite aku buat join walaupun ak dah tolak dengan cara apapun itu tp akhirnya aku mau dan sekarang aku udah pelayanan🥹🙌🏻 aku tau kita bukan pisah kota HAHAHA tp jujur sedih pas tau kakak mau naik pro M 🥲 tpi gpp karna kita ga selama nya di aog kita semua pasti bakal naik levellll ‼️🔥 Terimakasih udah kenalin aku ke CG 02 yang sangat random dan seruuu iniii HAHAHHA SO HAPPYYYYYY DAN TERBERKATI DISINIII, Makasih udah selalu semangatin akuuu, doain akuuuu , careee dengan akuu, udah kasih aku apa yang aku ga dapatin di keluarga aku, makasih selalu yakinin aku kalo aku pantas di dunia ini, makasih udah bikin aku lebih percaya diri lagiii, makasih udah bantu aku dpt kerjaan, makasih ya kakk buat semua hal baik nya HAHAHA INI AKU NGETIK SAMBIL NANGIS TAU 😭🤍
+Kakak tuh kayak,
+1 Tesalonika 5:11
+(11) Karena itu nasihatilah seorang akan yang lain dan saling membangunlah kamu seperti yang memang kamu lakukan.
+Kakak selalu support aku dengan cara kakak 🤍 Tetap semangat ya di pro M , jngn sedih lagiii BIG LOVEE UNTUK KAKAK ❤️‍🔥 Maafkan diriku dulu sering yapping ngeluh ke kakak HAHHAHA tp kakak harus tau aku bahagia dengan bisa cerita ke kakak Thanks kak 🥹🤍`,
+    },
+    chris: {
+        sender: 'Chris',
+        colorClass: 'memo-3',
+        text: `Terimakasih ka Anya yang sudah selalu support ak dan selalu juga memuridkan diriku ini yang sangat kepala batu ini dan usil tapi ka Anya tetap mau fight untuk ak bisa maju terus dalam pelayanan, dalam pertumbuhan iman. Sehingga bisa seperti sekarang ini dan juga ka Anya selalu menahan ak saat ak ada yg kelewat batas membuat ak tersadar gaa semua harus ceplas ceplos. Dan yg paling ku rindukan pasti keceriaan ka Anya walaupun cape dan lelah membagi waktu kerja dan juga pelayanan, tapi yg pasti ka Anya lakukan itu untuk kemuliaan nama bagi nama tuhan. Dan ak berharap terus ka Anya bawa vibes keceriaan itu dalam pekerjaan di ladang tuhan yg baru dan kiranya ka Anya terus dipakai besar dalam pekerjaan tuhan God bless you ka Anya wee Love you
+
+Yosua 1:9 (TB)
+"kuatkan dan teguhkanlah hatimu Janganlah kecut dan tawar hati, sebab TUHAN, Allahmu, menyertai engkau, ke mana pun engkau pergi."`,
+    },
+    kevin: {
+        sender: 'Kevin',
+        colorClass: 'memo-4',
+        text: `Halo Kak Anya!
+
+Wah, enggak terasa ya Kak, sudah 2 tahun Kakak jadi CGL-ku. Sebenarnya banyak banget yang ingin aku sampaikan, tapi intinya aku mau bilang Thank you sebesar-besarnya. Kakak sudah banyak mengubah hidup dan pola pikirku.
+
+Terima kasih karena Kakak selalu menasihati aku untuk mau memaafkan orang-orang di sekitarku, dan selalu mengingatkan aku untuk mengandalkan Roh Kudus, bukan cuma kekuatan diri sendiri. Kakak juga yang memberi aku keberanian untuk mencoba hal-hal baru, seperti belajar main gitar dan berani ngobrol sama orang baru.
+
+Aku benar-benar merasa sangat bertumbuh di CG ini karena Tuhan bekerja lewat Kakak. Terima kasih ya Kak Anya, sudah tetap sabar menghadapi sifatku yang keras kepala. Maaf ya Kak kalau selama ini aku sering merepotkan, tapi Kakak enggak pernah bosan atau capek untuk bantu memperbaiki area-area lemahku. Thank you so much, Kak. Dan sekarang Kak, berkat bimbingan Kakak, aku jadi lebih berani untuk mau lebih jauh terbang dan siap untuk apa aja wkwk.
+
+Aku berdoa supaya Kak Anya di ladang yang baru bisa semakin bersinar dan semakin luar biasa dipakai Tuhan. God bless you, Kak Anya! SEMANGATTTTTTTT MENYALAAAAAAAAA! 🔥
+
+1 Korintus 15:58
+"Karena itu, saudara-saudaraku yang kekasih, berdirilah teguh, jangan goyah, dan giatlah selalu dalam pekerjaan Tuhan! Sebab kamu tahu, bahwa dalam persekutuan dengan Tuhan jerih payahmu tidak sia-sia."
+`,
+    },
+};
+
+function openMemo(id) {
+    const memo = memoData[id];
+    if (!memo) return;
+    memoModalSender.innerText = "From: " + memo.sender;
+    memoModalText.innerText = memo.text;
+    memoModalBody.className = "memo-modal-body " + memo.colorClass;
+    memoModal.classList.add('active');
+}
+closeMemoBtn.addEventListener('click', () => memoModal.classList.remove('active'));
+memoModal.addEventListener('click', (e) => { if (e.target === memoModal) memoModal.classList.remove('active'); });
+
+// 4. LIGHTBOX GALLERY
+const galleryItems = document.querySelectorAll('.gallery-item img');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const closeBtn = document.getElementById('close-btn');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+let currentIndex = 0;
+
+function showImage(index) {
+    if (index >= galleryItems.length) currentIndex = 0;
+    else if (index < 0) currentIndex = galleryItems.length - 1;
+    else currentIndex = index;
+    lightboxImg.src = galleryItems[currentIndex].src;
+}
+galleryItems.forEach((item, index) => {
+    item.parentElement.addEventListener('click', () => { lightbox.classList.add('active'); showImage(index); });
+});
+closeBtn.addEventListener('click', () => lightbox.classList.remove('active'));
+nextBtn.addEventListener('click', () => showImage(currentIndex + 1));
+prevBtn.addEventListener('click', () => showImage(currentIndex - 1));
+lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+
+// 5. VIDEO MODAL
+const openVideoBtn = document.getElementById('open-video-btn');
+const videoModal = document.getElementById('video-modal');
+const closeVideoBtn = document.getElementById('close-video-btn');
+const localVideo = document.getElementById('local-video');
+const localVideoSource = 'video/video.mp4';
+
+function showVideoModal() {
+    if (localVideo) {
+        localVideo.src = localVideoSource;
+        localVideo.load();
+        videoModal.classList.add('active');
+        setTimeout(() => { localVideo.play().catch(() => {}); }, 150);
+    }
+}
+openVideoBtn.addEventListener('click', showVideoModal);
+closeVideoBtn.addEventListener('click', () => { videoModal.classList.remove('active'); localVideo.pause(); });
+videoModal.addEventListener('click', (e) => { if (e.target === videoModal) { videoModal.classList.remove('active'); localVideo.pause(); } });
+</script>
+
+</body>
+</html>
